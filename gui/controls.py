@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QTabWidget, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QVBoxLayout
 from PyQt5.QtMultimedia import QCameraInfo, QCamera
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from PyQt5.QtGui import QKeyEvent # use for key
@@ -26,7 +26,7 @@ class CameraDisplay(QMainWindow):
 
 
 
-
+        self.test = QWidget()
         # Camera 1
         self.viewfinder = QCameraViewfinder()
 
@@ -36,8 +36,20 @@ class CameraDisplay(QMainWindow):
 
         self.viewfinder.show()
 
-        self.tabs.addTab(self.camera_tab, 'Cameras')
-        self.tabs.addTab(self.settings_tab, 'UI Settings')
+        # self.viewfinder.setStyleSheet('border-size')
+        ####fix layout for camera tab
+
+        self.camera_tab = QVBoxLayout()
+        self.camera_tab.addWidget(self.viewfinder)
+
+        
+
+        # self.tabs.addTab(self.viewfinder, 'Cameras')
+        # self.tabs.addTab(self.settings_tab, 'UI Settings')
+        # self.tabs.addTab(self.test, 'testing')
+
+
+
         # Camera 2
         # self.viewfinder2 = QCameraViewfinder()
 
@@ -49,13 +61,12 @@ class CameraDisplay(QMainWindow):
 
 
         # Layout
-        self.camera_tab.layout = QGridLayout()
-        self.camera_tab.layout.addWidget(self.viewfinder, 0,0,0,0)
+
         # self.camera_tab.layout.addWidget(QPushButton('hi'), 0,1)
 
 
         self.layout.addWidget(self.tabs)
-        self.layout.addWidget(self.viewfinder)
+        # self.layout.addWidget(self.viewfinder)
 
 
 
