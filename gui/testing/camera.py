@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent, QCameraInfo, QCamera
 from PyQt5.QtMultimediaWidgets import QVideoWidget, QCameraViewfinder
 from PyQt5.QtCore import Qt, QUrl
-import cv2
 import sys
 
 class CameraDisplay(QMainWindow):
