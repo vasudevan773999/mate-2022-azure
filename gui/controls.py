@@ -5,15 +5,22 @@ from PyQt5.QtGui import QKeyEvent # use for key
 import json
 import sys
 
-class CameraDisplay(QMainWindow):
+class AzureUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        with open('gui/settings.json', 'r') as f:
+            self.json_settings = json.load(f)
+
         # Setup
-        self.setWindowTitle('Azure Controls')
+        self.setWindowTitle('Azure User Interface')
+        self.setStyleSheet('background: rgb(40,40,40)' if self.json_settings['theme'] == 'dark' else 'background: rgb(255,255,255)')
+        
+
         self.cameras = QCameraInfo.availableCameras()
 
         self.layout = QVBoxLayout()
+        
 
         self.parent_widget = QWidget()
         self.parent_widget.setLayout(self.layout)
@@ -21,15 +28,13 @@ class CameraDisplay(QMainWindow):
         self.setCentralWidget(self.parent_widget)
 
 
-        with open('gui/settings.json', 'r') as f:
-            self.json_settings = json.load(f)
-
 
         # Tabs
         self.tabs = QTabWidget()
         self.camera_tab = QWidget()
         self.settings_tab = QWidget()
 
+        self.tabs.setStyleSheet(f'{"background: rgb(50,50,50)" if self.json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; border-radius: 10px')
         self.layout.addWidget(self.tabs)
 
 
@@ -40,8 +45,6 @@ class CameraDisplay(QMainWindow):
         self.camera_1.setViewfinder(self.viewfinder_1)
         self.camera_1.start()
 
-        self.viewfinder_1.show()
-
 
         # Camera 2
         self.viewfinder_2 = QCameraViewfinder()
@@ -49,8 +52,6 @@ class CameraDisplay(QMainWindow):
         self.camera_2 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_2']])
         self.camera_2.setViewfinder(self.viewfinder_2)
         self.camera_2.start()
-
-        self.viewfinder_2.show()
 
 
         # Camera 3
@@ -60,8 +61,6 @@ class CameraDisplay(QMainWindow):
         self.camera_3.setViewfinder(self.viewfinder_3)
         self.camera_3.start()
 
-        self.viewfinder_3.show()
-
 
         # Camera 4
         self.viewfinder_4 = QCameraViewfinder()
@@ -69,8 +68,6 @@ class CameraDisplay(QMainWindow):
         self.camera_4 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_4']])
         self.camera_4.setViewfinder(self.viewfinder_4)
         self.camera_4.start()
-
-        self.viewfinder_4.show()
 
 
         # Camera layout
@@ -93,11 +90,10 @@ class CameraDisplay(QMainWindow):
         self.tabs.addTab(self.settings_tab, "Settings")
 
 
-
 if __name__ == '__main__':
     app = QApplication([])
 
-    window = CameraDisplay()
+    window = AzureUI()
     window.show()
 
     sys.exit(app.exec())
