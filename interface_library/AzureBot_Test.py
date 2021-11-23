@@ -2,6 +2,7 @@
 
 from threading import Thread
 import serial
+import controls
 
 class Comms:
     def __init__(self, port: int, baud_rate: int):
@@ -14,15 +15,17 @@ class Comms:
 
     def run(self):
         while True: 
-            packetControls =  self.ser.read() #the output from the controls will be an array of values
-            left_bumper = packetControls[0] #and repeat... will finalize once I know what values will come
-
-
-
+            packetControls = controls.Controls() #change later
+            
+            
+            packetControls.split(chr())
+            left_bumper = packetControls[1] #and repeat... will finalize once I know what values will come
+            
 
     def start_thread(self):
         start_thread = Thread(target = self.run)  
         start_thread.start()
+        
 
 
 
