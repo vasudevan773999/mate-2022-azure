@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QVBo
 from PyQt5.QtMultimedia import QCameraInfo, QCamera
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from PyQt5.QtGui import QKeyEvent # use for key
+
 import json
 import sys
 
@@ -20,13 +21,11 @@ class AzureUI(QMainWindow):
         self.cameras = QCameraInfo.availableCameras()
 
         self.layout = QVBoxLayout()
-        
 
         self.parent_widget = QWidget()
         self.parent_widget.setLayout(self.layout)
 
         self.setCentralWidget(self.parent_widget)
-
 
 
         # Tabs
