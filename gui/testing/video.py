@@ -19,7 +19,7 @@ class Video(QMainWindow):
 
         self.media_player.setVideoOutput(self.video)
 
-        self.media_player.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/krishnakundalia/mate-2022-azure-1/gui/cam_test/rick_roll.mp4')))
+        self.media_player.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/krishnakundalia/mate-2022-azure-2/gui/testing/rick_roll.mp4')))
         self.media_player.play()
 
         self.setCentralWidget(self.video)
