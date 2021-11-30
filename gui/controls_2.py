@@ -55,8 +55,6 @@ class AzureUI(QMainWindow):
         self.slider_1 = QSlider()
         self.slider_1.setMaximum(10)
 
-        self.slider_1.valueChanged.connect(self.zoom_camera_1)
-
 
         self.camera_1_parent.layout.addWidget(self.viewfinder_1, 0,0)
         self.camera_1_parent.layout.addWidget(self.slider_1, 0,1)
@@ -80,9 +78,6 @@ class AzureUI(QMainWindow):
         self.slider_2 = QSlider()
         self.slider_2.setMaximum(10)
 
-        # self.slider_2.valueChanged.connect(self.zoom_camera_1)
-
-
         self.camera_2_parent.layout.addWidget(self.viewfinder_2, 0,0)
         self.camera_2_parent.layout.addWidget(self.slider_2, 0,1)
 
@@ -104,9 +99,6 @@ class AzureUI(QMainWindow):
 
         self.slider_3 = QSlider()
         self.slider_3.setMaximum(10)
-
-        # self.slider_2.valueChanged.connect(self.zoom_camera_1)
-
 
         self.camera_3_parent.layout.addWidget(self.viewfinder_3, 0,0)
         self.camera_3_parent.layout.addWidget(self.slider_3, 0,1)
@@ -131,24 +123,21 @@ class AzureUI(QMainWindow):
         self.slider_4 = QSlider()
         self.slider_4.setMaximum(10)
 
-        # self.slider_2.valueChanged.connect(self.zoom_camera_1)
-
-
         self.camera_4_parent.layout.addWidget(self.viewfinder_4, 0,0)
         self.camera_4_parent.layout.addWidget(self.slider_4, 0,1)
 
         self.camera_4_parent.setLayout(self.camera_4_parent.layout)
 
-        #temp
-        self.new = QWidget()
-        self.new.layout = QGridLayout()
-        self.new.setLayout(self.new.layout)
-        self.new.layout.addWidget(self.camera_1_parent)
+        # #temp
+        # self.new = QWidget()
+        # self.new.layout = QGridLayout()
+        # self.new.setLayout(self.new.layout)
+        # self.new.layout.addWidget(self.camera_1_parent)
 
 
         # Camera layout
         self.camera_tab.layout = QGridLayout()
-        self.camera_tab.layout.addWidget(self.new, 1,0)
+        self.camera_tab.layout.addWidget(self.camera_1_parent, 1,0)
         self.camera_tab.layout.addWidget(self.camera_2_parent, 1,1)
         self.camera_tab.layout.addWidget(self.camera_3_parent, 2,0)
         self.camera_tab.layout.addWidget(self.camera_4_parent, 2,1)
@@ -165,14 +154,14 @@ class AzureUI(QMainWindow):
         self.tabs.addTab(self.camera_tab, "Cameras")
         self.tabs.addTab(self.settings_tab, "Settings")
 
-    def zoom_camera_1(self, e):
-        # self.camera_1.
+    # def zoom_camera_1(self, e):
+    #     # self.camera_1.
 
 
-        self.new.resize(460-(e*10), 250-(10*e))
-        # self.viewfinder_1.resize()
-        # self.viewfinder_1.
-        pass
+        # self.new.resize(460-(e*10), 250-(10*e))
+        # # self.viewfinder_1.resize()
+        # # self.viewfinder_1.
+        # pass
 
 
 if __name__ == '__main__':
