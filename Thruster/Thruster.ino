@@ -29,5 +29,5 @@ void loop() {
   Serial.available();
   myservo.write(45);              // tell servo to go to position in variable 'pos'
   delay(300);
-
+ 
 }
