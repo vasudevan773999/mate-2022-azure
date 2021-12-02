@@ -19,14 +19,32 @@ class Comms:
             packetControls = controls.Controls() #change later
             leftJoy_LR = packetControls.packet[0] #and repeat... will finalize once I know what values will come
             leftJoy_UD = packetControl.packet[1]
+            rightJoy_LR = packetControls.packet[2]
+            rightJoy_UD = packetControls.packet[3]
 
+            
             while True:
+                
+                #coding the Left thruster
+                
                 if leftJoy_LR < [43,43]
-                    packet_leftJoy_stopped = chr(1) + chr(5) + chr((leftJoy_speed=0).encode("latin")) + chr(8)
+                    packet_leftJoy_stopped = chr(1) + chr(7) + chr((leftJoy_LR = 0).encode("latin")) + chr(8)
                     self.ser.write(packet_leftJoy_stopped)
                 else:
-                    packet_leftJoy = chr(1) + chr(5) + chr((leftJoy_speed).encode("latin")) + chr(8) 
+                    packet_leftJoy = chr(1) + chr(7) + chr((leftJoy_LR).encode("latin")) + chr(8) 
                     self.ser.write(packet_leftJoy)
+
+                #coding the Right thruster
+                if rightJoy_LR < [43,43]
+                    packet_rightJoy_stopped = chr(1) + chr(6) + chr((rightJoy_LR=0).encode("latin")) + chr(8)
+                    self.ser.write(packet_rightJoy_stopped)
+                else:
+                    packet_rightJoy = chr(1) + chr(6) + chr((rightJoy_LR).encode("latin")) + chr(8) 
+                    self.ser.write(packet_rightJoy)
+
+                    
+
+
 
                 #create serial connection computer and mc
                 #read data
