@@ -1,5 +1,6 @@
 
 
+
 #include <Servo.h>
 int thruster_Speed_FR = 1500;
 int thruster_Speed_BR = 1500;
@@ -47,33 +48,19 @@ void loop() {
     
   
     if (incomingByte[1] == char(2){
-       mythruster_L.writeMicroseconds(1800);
+       mythruster_FR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(3){
-      mythruster_setup();
+      mythruster_BR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(4){
-      mythruster_setup();
+      mythruster_BL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(5){
-      mythruster_setup();
+      mythruster_FL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(6){
-      mythruster_setup();
+      mythruster_R.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(7){
-      mythruster_setup();
+      mythruster_L.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     }
 
-
-        if (incomingByte[2] == char(2){
-      mythruster_setup();
-    } else if (incomingByte[2] == char(3){
-      mythruster_setup();
-    } else if (incomingByte[2] == char(4){
-      mythruster_setup();
-    } else if (incomingByte[2] == char(5){
-      mythruster_setup();
-    } else if (incomingByte[2] == char(6){
-      mythruster_setup();
-    } else if (incomingByte[2] == char(7){
-      mythruster_setup();
-    }
       
 }
 
