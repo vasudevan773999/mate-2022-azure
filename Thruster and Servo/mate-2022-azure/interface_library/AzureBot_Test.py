@@ -27,5 +27,3 @@ class Comms:
         start_thread.start()
         
 
-
-
