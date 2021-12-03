@@ -15,8 +15,13 @@ Servo mythruster_BL;
 Servo mythruster_FL;
 Servo mythruster_R;
 Servo mythruster_L;
+Servo myservo_rotate;
+Servo myservo_grab;  
 
 void setup() {
+  myservo_rotate.attach(9);
+  myservo_grab.attach(9);
+  
   mythruster_FR.attach(7,1000,2000);
   mythruster_FR.writeMicroseconds(1500);
   
@@ -50,30 +55,28 @@ void loop() {
     if (incomingByte[1] == char(2){
        mythruster_FR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(3){
-      mythruster_BR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
-    } else if (incomingByte[1] == char(4){
-      mythruster_BL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
-    } else if (incomingByte[1] == char(5){
       mythruster_FL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
+    } else if (incomingByte[1] == char(4){
+      mythruster_BR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
+    } else if (incomingByte[1] == char(5){
+      mythruster_BL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(6){
       mythruster_R.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(7){
       mythruster_L.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
+    } else if (incomingByte[1] == char(8)){
+      myservo_rotate.write((int (incomingByte[2])/255)*500+1500));
+    } else if (incomingByte[1] == char(8)){
+      myservo_grab.write((int (incomingByte[2])/255)*500+1500));
     }
+
+
 
       
 }
 
-void mythruster_setup() {
-  Serial.print("Enter thruster speed: ");
-  int temp = Serial.parseInt();
-  if (temp != 0) thruster_Speed = temp;
-  //changing the fan speed
-  Serial.print("thruster_speed = ");
-  Serial.println(thruster_Speed);
-  mythruster.writeMicroseconds(thruster_Speed);
-  Serial.write(9600);
-  delay(300);
+/*void mythruster_setup() {
+  mythruster_BL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
 }
   
   
