@@ -49,7 +49,7 @@ void loop() {
 
    if (Serial.available()); {
       int motor_speed = incomingByte[2];
-      String incomingByte = Serial.read(); 
+      int incomingByte = Serial.parseInt(); 
     }
     
   
