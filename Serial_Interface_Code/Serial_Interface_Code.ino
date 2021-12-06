@@ -1,6 +1,7 @@
 
 
 
+
 #include <Servo.h>
 int thruster_Speed_FR = 1500;
 int thruster_Speed_BR = 1500;
@@ -70,15 +71,30 @@ void loop() {
       myservo_grab.write((int (incomingByte[2])/255)*500+1500));
     }
 
+    if (incomingByte[2] == char(3){
+      mythruster_FR.writeMicroseconds(1500)
+    }else if (incomingByte[1] == char(3){
+      mythruster_FL.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(4){
+      mythruster_BR.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(5){
+      mythruster_BL.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(6){
+      mythruster_R.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(7){
+      mythruster_L.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(8)){
+      myservo_rotate.writeMicroseconds(1500);
+    } else if (incomingByte[1] == char(8)){
+      myservo_grab.writeMicroseconds(1500);
+    }
 
 
       
 }
-
+               
 /*void mythruster_setup() {
   mythruster_BL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
 }
   
   
-
- 
