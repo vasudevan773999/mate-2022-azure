@@ -86,7 +86,7 @@ void loop() {
     } else if (incomingByte[1] == char(8)){
       myservo_rotate.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(8)){
-      myservo_attatch.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
+      myservo_grab.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     }
 
 
