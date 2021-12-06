@@ -20,25 +20,25 @@ Servo myservo_rotate;
 Servo myservo_grab;  
 
 void setup() {
-  myservo_rotate.attach(9);
-  myservo_grab.attach(9);
+  myservo_rotate.attach(13);
+  myservo_grab.attach(14);
   
   mythruster_FR.attach(7,1000,2000);
   mythruster_FR.writeMicroseconds(1500);
   
-  mythruster_BR.attach(7,1000,2000);
+  mythruster_BR.attach(8,1000,2000);
   mythruster_BR.writeMicroseconds(1500);
   
-  mythruster_BL.attach(7,1000,2000);
+  mythruster_BL.attach(9,1000,2000);
   mythruster_BL.writeMicroseconds(1500);
   
-  mythruster_FL.attach(7,1000,2000);
+  mythruster_FL.attach(10,1000,2000);
   mythruster_FL.writeMicroseconds(1500);
   
-  mythruster_R.attach(7,1000,2000);
+  mythruster_R.attach(11,1000,2000);
   mythruster_R.writeMicroseconds(1500);
   
-  mythruster_L.attach(7,1000,2000);
+  mythruster_L.attach(12,1000,2000);
   mythruster_L.writeMicroseconds(1500);
   
   delay(200);
@@ -53,9 +53,27 @@ void loop() {
     }
     
   
-    if (incomingByte[1] == char(2){
-       mythruster_FR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
-    } else if (incomingByte[1] == char(3){
+    if (incomingByte[1] == 7{
+       mythruster_FR.writeMicroseconds((incomingByte[2]));
+    } else if (incomingByte[1] == 8{
+      mythruster_FL.writeMicroseconds((incomingByte[2]));
+    } else if (incomingByte[1] == 9{
+      mythruster_BR.writeMicroseconds( (incomingByte[2]));
+    } else if (incomingByte[1] == 10{
+      mythruster_BL.writeMicroseconds((incomingByte[2]);
+    } else if (incomingByte[1] == 11{
+      mythruster_R.writeMicroseconds((incomingByte[2]));
+    } else if (incomingByte[1] == 12{
+      mythruster_L.writeMicroseconds( (incomingByte[2]));
+    } else if (incomingByte[1] == 13{
+      myservo_rotate.write((incomingByte[2]));
+    } else if (incomingByte[1] == 14{
+      myservo_grab.write( (incomingByte[2]);
+    }
+
+    if (incomingByte[2] == char(3){
+      mythruster_FR.writeMicroseconds((int (incomingByte[2])/255)*500+1500))
+    }else if (incomingByte[1] == char(3){
       mythruster_FL.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(4){
       mythruster_BR.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
@@ -66,27 +84,9 @@ void loop() {
     } else if (incomingByte[1] == char(7){
       mythruster_L.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(8)){
-      myservo_rotate.write((int (incomingByte[2])/255)*500+1500));
+      myservo_rotate.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     } else if (incomingByte[1] == char(8)){
-      myservo_grab.write((int (incomingByte[2])/255)*500+1500));
-    }
-
-    if (incomingByte[2] == char(3){
-      mythruster_FR.writeMicroseconds(1500)
-    }else if (incomingByte[1] == char(3){
-      mythruster_FL.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(4){
-      mythruster_BR.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(5){
-      mythruster_BL.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(6){
-      mythruster_R.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(7){
-      mythruster_L.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(8)){
-      myservo_rotate.writeMicroseconds(1500);
-    } else if (incomingByte[1] == char(8)){
-      myservo_grab.writeMicroseconds(1500);
+      myservo_attatch.writeMicroseconds((int (incomingByte[2])/255)*500+1500));
     }
 
 
