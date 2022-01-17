@@ -21,7 +21,12 @@ void setup() {
   mythruster_L.attach(6);
   myservo_rotate.attach(7); 
   myservo_grab.attach(8);// attaches the servo on pin 9 to the servo object
-  mythruster.writeMicroseconds(1500);
+  mythruster_FR.writeMicroseconds(1500);
+  mythruster_BR.writeMicroseconds(1500);
+  mythruster_FL.writeMicroseconds(1500);
+  mythruster_BL.writeMicroseconds(1500);
+  mythruster_R.writeMicroseconds(1500);
+  mythruster_L.writeMicroseconds(1500);
   delay(200);
   Serial.begin(9600);
 
