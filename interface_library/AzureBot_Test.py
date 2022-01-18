@@ -14,6 +14,15 @@ class Comms:
         self.ser.open()
 
 
+
+    def send_value(self,value):
+        #preq: -100<=value<=100
+        value = round(value*1.27)
+        if value<0:
+            value = 255+value
+        return value 
+
+
     def run(self):
         while True: 
             packetControls = controls.Controls() #change later
@@ -21,29 +30,40 @@ class Comms:
             leftJoy_UD = packetControl.packet[1]
             rightJoy_LR = packetControls.packet[2]
             rightJoy_UD = packetControls.packet[3]
+            clawButton = packetControls.packet[4]
 
             
             while True:
                 
-                #coding the Left thruster
+                #coding the Left thruster (sendSystemsLes)
                 
-                if leftJoy_LR < [43,43]
-                    packet_leftJoy_stopped = chr(1) + chr(7) + chr((leftJoy_LR = 0).encode("latin")) + chr(8)
+                if leftJoy_LR < [43,43]:
+                    value = send_value(leftJoy_LR)
+                    packet_leftJoy_stopped = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(10)
                     self.ser.write(packet_leftJoy_stopped)
                 else:
-                    packet_leftJoy = chr(1) + chr(7) + chr((leftJoy_LR).encode("latin")) + chr(8) 
+                    value = send_value(leftJoy_LR)
+                    packet_leftJoy = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(10) 
                     self.ser.write(packet_leftJoy)
 
+
                 #coding the Right thruster
-                if rightJoy_LR < [43,43]
-                    packet_rightJoy_stopped = chr(1) + chr(6) + chr((rightJoy_LR=0).encode("latin")) + chr(8)
+                if rightJoy_LR < [43,43]:
+                    value = send_value(rightJoy_LR)
+                    packet_rightJoy_stopped = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(10)
                     self.ser.write(packet_rightJoy_stopped)
                 else:
-                    packet_rightJoy = chr(1) + chr(6) + chr((rightJoy_LR).encode("latin")) + chr(8) 
+                    packet_rightJoy = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(10) 
                     self.ser.write(packet_rightJoy)
 
-                    
+                #servo claw code - to be finalized
+                if clawButton == True:
+                    packet_servo = chr(1) + chr(7) + chr() + chr(10)
+                    self.ser.write(packet_servo)
 
+                else:
+                    if clawButton == False
+                    packet_servo = chr(1) + chr(7) + #add info
 
 
                 #create serial connection computer and mc
@@ -56,6 +76,3 @@ class Comms:
         start_thread = Thread(target = self.run)  
         start_thread.start()
         
-
-
-
