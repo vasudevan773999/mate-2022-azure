@@ -3,12 +3,7 @@
 
 
 #include <Servo.h>
-int thruster_Speed_FR = 1500;
-int thruster_Speed_BR = 1500;
-int thruster_Speed_BL = 1500;
-int thruster_Speed_FL = 1500;
-int thruster_Speed_R = 1500;
-int thruster_Speed_L = 1500;
+
 
 Servo mythruster_FR;
 Servo mythruster_BR;
@@ -57,21 +52,21 @@ void loop() {
     }
     
   
-    if (incomingByte[1] == 2{
+    if (incomingByte[1] == 2){
        mythruster_FR.writeMicroseconds((incomingByte[2]));
-    } else if (incomingByte[1] == 3{
+    } else if (incomingByte[1] == 3){
       mythruster_FL.writeMicroseconds((incomingByte[2]));
-    } else if (incomingByte[1] == 4{
+    } else if (incomingByte[1] == 4){
       mythruster_BR.writeMicroseconds( (incomingByte[2]));
-    } else if (incomingByte[1] == 5{
+    } else if (incomingByte[1] == 5){
       mythruster_BL.writeMicroseconds((incomingByte[2]);
-    } else if (incomingByte[1] == 6{
+    } else if (incomingByte[1] == 6){
       mythruster_R.writeMicroseconds((incomingByte[2]));
-    } else if (incomingByte[1] == 7{
+    } else if (incomingByte[1] == 7){
       mythruster_L.writeMicroseconds( (incomingByte[2]));
-    } else if (incomingByte[1] == 8{
+    } else if (incomingByte[1] == 8){
       myservo_rotate.write((incomingByte[2]));
-    } else if (incomingByte[1] == 9{
+    } else if (incomingByte[1] == 9){
       myservo_grab.write( (incomingByte[2]);
     }
 
