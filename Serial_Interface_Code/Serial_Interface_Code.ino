@@ -3,8 +3,17 @@
 
 
 #include <Servo.h>
-
-
+char header = 1
+char FR = 2
+char FL = 3
+char BR = 4
+char BL = 5
+char Right = 6
+char Left = 7
+char Servo_rotate = 8
+char Servo_grab = 9
+char footer = 10
+int motorused
 Servo mythruster_FR;
 Servo mythruster_BR;
 Servo mythruster_BL;
@@ -42,12 +51,14 @@ void setup() {
 }
 
 void loop() {
-    Serial.print("thruster_speed = ");
-  
-  ` Serial.print(incomingByte);
 
-   if (Serial.available()); {
-      int motor_speed = incomingByte[2];
+
+   if (Serial.available==4); {
+      byte packetheader = Serial.read();
+   if (packetheader==header);
+      byte motor = Serial.read();
+  
+      motor = incomingByte[2];
       int incomingByte = Serial.parseInt(); 
     }
     
