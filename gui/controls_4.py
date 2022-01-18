@@ -13,8 +13,8 @@ class AzureUI(QMainWindow):
             global json_settings
             json_settings = json.load(f)
 
-        global cameras
-        cameras = QCameraInfo.availableCameras()
+        # global cameras
+        # cameras = QCameraInfo.availableCameras()
 
 
         self.setWindowTitle('Azure User Interface')
@@ -28,9 +28,39 @@ class AzureUI(QMainWindow):
         self.tabs = Tabs().tabs
         self.layout.addWidget(self.tabs)
 
-        
+        # self.setCentralWidget(self.tabs)
 
-        self.setCentralWidget(self.tabs)
+
+
+        ## testing
+
+        self.cameras = QCameraInfo.availableCameras()
+
+        self.frame = QWidget()
+        self.frame.setStyleSheet(f'{"background: rgb(50,50,50)" if json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
+        self.frame.setFixedSize(460,250)
+
+
+        self.viewfinder = QCameraViewfinder()
+
+        self.camera = QCamera(self.cameras[json_settings['camera_ports']['camera_1']])
+        self.camera.setViewfinder(self.viewfinder)
+        self.camera.start()
+
+
+        self.slider = QSlider()
+        self.slider.setMaximum(20)
+
+
+        self.frame.layout = QGridLayout()
+        self.frame.layout.addWidget(self.viewfinder, 0,0)
+        self.frame.layout.addWidget(self.slider, 0,1)
+
+        self.frame.setLayout(self.frame.layout)
+
+        self.setCentralWidget(self.frame)
+
+        # self.setCentralWidget(CameraLayout('camera_1').frame)
 
 
 class Tabs(QTabWidget):
@@ -53,9 +83,10 @@ class CameraTab(QWidget):
 
         #test
 
-        self.cameras = QCameraInfo.availableCameras()
-
+        # self.cameras = QCameraInfo.availableCameras()
+        
         ####
+        """
         self.camera_4_parent = QWidget()
         self.camera_4_parent.setStyleSheet(f'{"background: rgb(50,50,50)" if json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
         self.camera_4_parent.setFixedSize(460,250)
@@ -76,6 +107,8 @@ class CameraTab(QWidget):
         self.camera_4_parent.layout.addWidget(self.slider_4, 0,1)
 
         self.camera_4_parent.setLayout(self.camera_4_parent.layout)
+
+        """
         # self.cameras = QCameraInfo.availableCameras()
 
         # self.frame = QWidget()
@@ -107,12 +140,15 @@ class CameraTab(QWidget):
         self.tab = QWidget()
         self.tab.layout = QGridLayout()
 
-        self.tab.layout.addWidget(self.camera_4_parent, 0,0)
+        # self.tab.layout.addWidget(self.camera_4_parent, 0,0)
+        self.tab.layout.addWidget(CameraLayout('camera_1').frame, 0,1)
         self.tab.layout.addWidget(CameraLayout('camera_2').frame, 0,1)
         self.tab.layout.addWidget(CameraLayout('camera_3').frame, 1,0)
         self.tab.layout.addWidget(CameraLayout('camera_4').frame, 1,1)
 
         self.tab.setLayout(self.tab.layout)
+    def camera_layout(self, selection):
+        sel
 
 # class Camera(QWidget()):
 #     self.setStyleSheet()
@@ -138,8 +174,11 @@ class SettingsTab(QWidget):
         self.tab.setLayout(self.tab.layout)
 
 class CameraLayout(QWidget):
-    def __init__(self, port):
+    def __init__(self, selection):
         super().__init__()
+
+        self.cameras = QCameraInfo.availableCameras()
+        # print(f'asdfsdasifvjdadsi {self.cameras}\n\n\n\n')
 
         self.frame = QWidget()
         self.frame.setStyleSheet(f'{"background: rgb(50,50,50)" if json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
@@ -148,9 +187,11 @@ class CameraLayout(QWidget):
 
         self.viewfinder = QCameraViewfinder()
 
-        self.camera = QCamera(cameras[json_settings['camera_ports'][port]])
+        self.camera = QCamera(self.cameras[json_settings['camera_ports'][selection]])
         self.camera.setViewfinder(self.viewfinder)
         self.camera.start()
+
+        # self.viewfinder.setLayout(self.layout)
 
 
         self.slider = QSlider()
@@ -168,7 +209,7 @@ if __name__ == '__main__':
 
     app = QApplication([])
 
-    window = CameraLayout(1)
+    window = AzureUI()
     window.show()
 
     sys.exit(app.exec())
