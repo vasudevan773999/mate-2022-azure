@@ -19,6 +19,7 @@ Servo mythruster_L;
 Servo myservo_rotate;
 Servo myservo_grab;  
 
+
 void setup() {
   myservo_rotate.attach(13);
   myservo_grab.attach(14);
@@ -46,6 +47,9 @@ void setup() {
 }
 
 void loop() {
+    Serial.print("thruster_speed = ");
+  
+  ` Serial.print(incomingByte);
 
    if (Serial.available()); {
       int motor_speed = incomingByte[2];
