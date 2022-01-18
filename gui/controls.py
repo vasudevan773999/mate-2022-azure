@@ -153,6 +153,7 @@ class AzureUI(QMainWindow):
         # Layout
         self.tabs.addTab(self.camera_tab, "Cameras")
         self.tabs.addTab(self.settings_tab, "Settings")
+    
 
     # def zoom_camera_1(self, e):
     #     # self.camera_1.
