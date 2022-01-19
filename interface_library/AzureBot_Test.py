@@ -30,7 +30,8 @@ class Comms:
             leftJoy_UD = packetControl.packet[1]
             rightJoy_LR = packetControls.packet[2]
             rightJoy_UD = packetControls.packet[3]
-            clawButton = packetControls.packet[4]
+            servoRotate = packetControls.packet[4]
+            servoGrab = packetControls.packet[5]
 
             
             while True:
@@ -39,32 +40,31 @@ class Comms:
                 
                 if leftJoy_LR < [43,43]:
                     value = send_value(leftJoy_LR)
-                    packet_leftJoy_stopped = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(10)
+                    packet_leftJoy_stopped = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(12)
                     self.ser.write(packet_leftJoy_stopped)
                 else:
                     value = send_value(leftJoy_LR)
-                    packet_leftJoy = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(10) 
+                    packet_leftJoy = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(12) 
                     self.ser.write(packet_leftJoy)
 
 
                 #coding the Right thruster
                 if rightJoy_LR < [43,43]:
                     value = send_value(rightJoy_LR)
-                    packet_rightJoy_stopped = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(10)
+                    packet_rightJoy_stopped = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(12)
                     self.ser.write(packet_rightJoy_stopped)
                 else:
-                    packet_rightJoy = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(10) 
+                    packet_rightJoy = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(12) 
                     self.ser.write(packet_rightJoy)
 
-                #servo claw code - to be finalized
-                if clawButton == True:
-                    packet_servo = chr(1) + chr(7) + chr() + chr(10)
+                #servo claw code - finalized with 
+                if servoRotat == True:
+                    packet_servoRotate = chr(1) + chr(10) + chr(12)
+                    self.ser.write(packet_servoRotate)
+
+                if servoGrab == True:
+                    packet_servoGrab = chr(1) + chr(11) + chr(12)
                     self.ser.write(packet_servo)
-
-                else:
-                    if clawButton == False
-                    packet_servo = chr(1) + chr(7) + #add info
-
 
                 #create serial connection computer and mc
                 #read data
