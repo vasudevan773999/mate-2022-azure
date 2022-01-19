@@ -1,9 +1,7 @@
-
-
 from threading import Thread
 import serial
 import controls
-
+import gui
 
 class Comms:
     def __init__(self, port: int, baud_rate: int):
@@ -13,15 +11,12 @@ class Comms:
         self.ser.close()
         self.ser.open()
 
-
-
     def send_value(self,value):
         #preq: -100<=value<=100
         value = round(value*1.27)
         if value<0:
             value = 255+value
         return value 
-
 
     def run(self):
         while True: 
@@ -33,7 +28,6 @@ class Comms:
             servoRotate = packetControls.packet[4]
             servoGrab = packetControls.packet[5]
 
-            
             while True:
                 
                 #coding the Left thruster (sendSystemsLes)
@@ -47,7 +41,6 @@ class Comms:
                     packet_leftJoy = chr(1) + chr(7) + chr((self.value).encode("latin")) + chr(12) 
                     self.ser.write(packet_leftJoy)
 
-
                 #coding the Right thruster
                 if rightJoy_LR < [43,43]:
                     value = send_value(rightJoy_LR)
@@ -57,8 +50,8 @@ class Comms:
                     packet_rightJoy = chr(1) + chr(6) + chr((self.value).encode("latin")) + chr(12) 
                     self.ser.write(packet_rightJoy)
 
-                #servo claw code - finalized with 
-                if servoRotat == True:
+                #servo claw code - finalized with packet value
+                if servoRotate == True:
                     packet_servoRotate = chr(1) + chr(10) + chr(12)
                     self.ser.write(packet_servoRotate)
 
@@ -75,4 +68,5 @@ class Comms:
     def start_thread(self):
         start_thread = Thread(target = self.run)  
         start_thread.start()
-        
+    
+    displayGUI = gui.GUI(#add info later)
