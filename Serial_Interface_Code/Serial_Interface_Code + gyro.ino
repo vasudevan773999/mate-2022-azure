@@ -96,7 +96,7 @@ void loop() {
     Serial.write(rotation_vector)
     Serial.write(orientation)
       
-    if (Serial.available>=4){
+      if (Serial.available>=4){
       
           if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
