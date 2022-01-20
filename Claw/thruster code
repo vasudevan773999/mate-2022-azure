@@ -1,0 +1,185 @@
+
+November 17, 2021
+	
+Krishna Kundalia
+5:42 PM
+
+Screenshot 2021-11-17 at 5.42.08 PM.png
+
+
+	
+emilio
+6:04 PM
+nice photo
+
+	
+Krishna Kundalia
+6:37 PM
+
+Does anyone know many cameras will be on the robot?
+
+	
+shauryaben
+10:51 PM
+Ayam looking mad fine in that photo 
+
+November 20, 2021
+	
+Vyju V. 💜
+6:51 PM
+
+Well, we would definitely want to be able to see a claw and at least one of the two bottom corners so it really depends on the placement of the camera.
+
+November 21, 2021
+	
+shauryaben
+5:18 PM
+
+ayam babu   :heart_eyes:  :smiling_face_with_3_hearts:  :yum:    
+
+November 24, 2021
+System
+12:01 PM
+@Nicholas de Carvalho joined the channel.
+	
+Vyju V. 💜
+3:45 PM
+#include <Servo.h>
+
+Servo thruster;
+
+void setup() {
+  // put your setup code here, to run once:
+  thruster.attach(9);
+  thruster.writeMicroseconds(1500); // send "stop" signal to ESC.
+  delay(7000); // delay to allow the ESC to recognize the stopped signal
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  thruster.writeMicroseconds(1700); // Send signal to ESC.
+}
+
+	
+Vyju V. 💜
+4:56 PM
+#include <Servo.h>
+Servo myservo;
+
+int thruster_Speed = 1500;
+
+void setup() {
+
+  myservo.attach(9);
+  myservo.writeMicroseconds(1500);
+  delay(200);
+  Serial.begin(9600);
+ 
+}
+
+void loop() {
+
+  Serial.print("Enter thruster speed: ");
+  int temp = Serial.parseInt();
+  if (temp != 0) thruster_Speed = temp;
+  //changing the fan speed
+  Serial.print("thruster_speed = ");
+  Serial.println(thruster_Speed);
+  myservo.writeMicroseconds(thruster_Speed);
+  Serial.write(9600);
+  Serial.available();
+
+}
+
+November 30, 2021
+	
+Mario Roman
+4:13 PM
+IMG_2664.HEIC
+HEIC1.6MB
+	
+Vyju V. 💜
+4:28 PM
+#include <Servo.h>
+Servo myservo;
+
+int thruster_Speed = 1500;
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+int pos = 0;
+void setup() {
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  myservo.attach(7);
+  myservo.writeMicroseconds(1500);
+  delay(200);
+  Serial.begin(9600);
+ 
+}
+
+void loop() {
+  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  Serial.print("Enter thruster speed: ");
+  int temp = Serial.parseInt();
+  if (temp != 0) thruster_Speed = temp;
+  //changing the fan speed
+  Serial.print("thruster_speed = ");
+  Serial.println(thruster_Speed);
+  myservo.writeMicroseconds(thruster_Speed);
+  Serial.write(9600);
+  Serial.available();
+
+}
+
+Show less
+	
+Vyju V. 💜
+4:39 PM
+
+
+
+
+
+
+#include <Servo.h>
+Servo myservo;
+
+int thruster_Speed = 1500;
+Servo mythruster;
+int pos = 0;
+void setup() {
+  mythruster.attach(7);
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  mythruster.writeMicroseconds(1500);
+  delay(200);
+  Serial.begin(9600);
+
+ 
+}
+
+void loop() {
+  myservo.write(0);              // tell servo to go to position in variable 'pos'
+
+
+  Serial.print("Enter thruster speed: ");
+  int temp = Serial.parseInt();
+  if (temp != 0) thruster_Speed = temp;
+  //changing the fan speed
+  Serial.print("thruster_speed = ");
+  Serial.println(thruster_Speed);
+  mythruster.writeMicroseconds(thruster_Speed);
+  Serial.write(9600);
+  Serial.available();
+  myservo.write(45);              // tell servo to go to position in variable 'pos'
+  delay(300);
+
+}
+
