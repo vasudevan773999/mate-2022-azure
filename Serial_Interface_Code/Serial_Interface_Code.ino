@@ -1,6 +1,6 @@
 
 
-
+import serial
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
@@ -89,7 +89,16 @@ void loop() {
         }
       }
     }
-              
+  
+    header_gyro = header_control[0]
+    orientation = orientation_control[1]
+    rotation_vector = rotation_vector_control[2]
+    linear_acceleration = linear_acceleration_control[3]
+    footer_gyro = footer_control[4]
+    gyro_packet = header_gyro + orientation + rotation_vector + linear_acceleration + footer_gyro
+    Serial.write(gyro_packet)
+  
+  
 }
 
 void printEvent(sensors_event_t* event) {
