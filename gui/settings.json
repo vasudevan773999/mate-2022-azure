@@ -4,7 +4,7 @@
     "camera_ports": {
         "camera_1": 0,
         "camera_2": 1,
-        "camera_3": 1,
+        "camera_3": 0,
         "camera_4": 1
     }
 }
