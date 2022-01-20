@@ -62,6 +62,7 @@ void loop() {
         byte motor = Serial.read();
         int8_t speed = Serial.read();
         int motor_speed = (int) (1500 + speed * (500 / 127));
+        
         if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 3){
@@ -74,10 +75,17 @@ void loop() {
           mythruster_R.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 7){
           mythruster_L.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 8){
-          myservo_rotate.write(motor_speed);
+        } 
+        
+       if (Serial.available>=3){
+          byte motor_servo = serial.read();
+          int8_t servo_speed = Serial.read();
+          int servo_speed_convert = (int)((servo_speed * 0.73)-255);
+          else if (incomingByte[2] == 8){
+          myservo_rotate.write(servo_speed_convert);
         } else if (incomingByte[2] == 9){
-          myservo_grab.write(motor_speed);
+          myservo_grab.write(servo_speed_convert);
+        }
         }
       }
     }
