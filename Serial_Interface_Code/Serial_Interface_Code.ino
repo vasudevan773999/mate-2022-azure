@@ -62,6 +62,9 @@ void loop() {
         byte motor = Serial.read();
         int8_t speed = Serial.read();
         int motor_speed = (int) (1500 + speed * (500 / 127));
+        byte motor_servo = serial.read();
+        int8_t servo_speed = Serial.read();
+         int servo_speed_convert = (int)((servo_speed * 0.73)-255);
         
         if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
@@ -75,16 +78,10 @@ void loop() {
           mythruster_R.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 7){
           mythruster_L.writeMicroseconds(motor_speed);
-        } 
-        
-       if (Serial.available>=3){
-          byte motor_servo = serial.read();
-          int8_t servo_speed = Serial.read();
-          int servo_speed_convert = (int)((servo_speed * 0.73)-255);
-          else if (incomingByte[2] == 8){
-          myservo_rotate.write(servo_speed_convert);
+        } else if (incomingByte[2] == 8){
+         myservo_rotate.write(servo_speed_convert);
         } else if (incomingByte[2] == 9){
-          myservo_grab.write(servo_speed_convert);
+         myservo_grab.write(servo_speed_convert);
         }
         }
       }
@@ -95,9 +92,69 @@ void loop() {
     rotation_vector = rotation_vector_control[2]
     linear_acceleration = linear_acceleration_control[3]
     footer_gyro = footer_control[4]
-    gyro_packet = header_gyro + orientation + rotation_vector + linear_acceleration + footer_gyro
-    Serial.write(gyro_packet)
+    Serial.write(linear_acceleration)
+    Serial.write(rotation_vector)
+    Serial.write(orientation)
+      
+    if (Serial.available>=4){
+      
+          if (incomingByte[2] == 2){
+          mythruster_FR.writeMicroseconds(motor_speed);
+        } else if (incomingByte[2] == 3){
+          mythruster_FL.writeMicroseconds(motor_speed);
+        } else if (incomingByte[2] == 4){
+          mythruster_BR.writeMicroseconds(motor_speed);
+        } else if (incomingByte[2] == 5){
+          mythruster_BL.writeMicroseconds(motor_speed);
+        } else if (incomingByte[2] == 6){
+          mythruster_R.writeMicroseconds(motor_speed);
+        } else if (incomingByte[2] == 7){
+          mythruster_L.writeMicroseconds(motor_speed);
+        } 
+      
+      
+    }
+
+      if (Serial.available>=4){
+          
+          if (incomingByte[2] == 2){
+          mythruster_FR.writeMicroseconds();
+        } else if (incomingByte[2] == 3){
+          mythruster_FL.writeMicroseconds();
+        } else if (incomingByte[2] == 4){
+          mythruster_BR.writeMicroseconds();
+        } else if (incomingByte[2] == 5){
+          mythruster_BL.writeMicroseconds();
+        } else if (incomingByte[2] == 6){
+          mythruster_R.writeMicroseconds();
+        } else if (incomingByte[2] == 7){
+          mythruster_L.writeMicroseconds();
+        } 
+      
+    }
+
+
+     if (Serial.available>=4){
+          
+          if (incomingByte[2] == 2){
+          mythruster_FR.writeMicroseconds();
+        } else if (incomingByte[2] == 3){
+          mythruster_FL.writeMicroseconds();
+        } else if (incomingByte[2] == 4){
+          mythruster_BR.writeMicroseconds();
+        } else if (incomingByte[2] == 5){
+          mythruster_BL.writeMicroseconds();
+        } else if (incomingByte[2] == 6){
+          mythruster_R.writeMicroseconds();
+        } else if (incomingByte[2] == 7){
+          mythruster_L.writeMicroseconds();
+        } 
+      
+    }
   
+  
+ 
+    
   
 }
 
