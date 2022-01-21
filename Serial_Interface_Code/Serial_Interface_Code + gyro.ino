@@ -64,7 +64,7 @@ void loop() {
         int motor_speed = (int) (1500 + speed * (500 / 127));
         byte motor_servo = serial.read();
         int8_t servo_speed = Serial.read();
-         int servo_speed_convert = (int)((servo_speed * 0.73)-255);
+        int servo_speed_convert = (int)((servo_speed * 0.73)-255);
         
         if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
@@ -86,15 +86,12 @@ void loop() {
         }
       }
     }
-  
-    header_gyro = header_control[0]
+
     orientation = orientation_control[1]
     rotation_vector = rotation_vector_control[2]
     linear_acceleration = linear_acceleration_control[3]
-    footer_gyro = footer_control[4]
-    Serial.write(linear_acceleration)
-    Serial.write(rotation_vector)
-    Serial.write(orientation)
+    linear_rotate_packet = char(0) + char(1) + char(2) + char(3)
+    orient_packet = char(0) + char(1) + char(2) + char(3)
       
     if (Serial.available>=4){
       
