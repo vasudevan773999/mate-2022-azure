@@ -8,6 +8,7 @@ import serial
 #include <Servo.h>
 char header = 1
 char footer = 10
+
   
 Servo mythruster_FR;
 Servo mythruster_BR;
@@ -17,6 +18,40 @@ Servo mythruster_R;
 Servo mythruster_L;
 Servo myservo_rotate;
 Servo myservo_grab;  
+
+
+void printEvent(sensors_event_t* event) {
+  double x = -1000000, y = -1000000 , z = -1000000; 
+  else if (event->type == SENSOR_TYPE_ORIENTATION) {
+    Serial.print("Orient:");
+    x = event->orientation.x;
+    y = event->orientation.y;
+    z = event->orientation.z;
+  }
+  else if (event->type == SENSOR_TYPE_ROTATION_VECTOR) {
+    Serial.print("Rot:");
+    x = event->gyro.x;
+    y = event->gyro.y;
+    z = event->gyro.z;
+  }
+  else if (event->type == SENSOR_TYPE_LINEAR_ACCELERATION) {
+    Serial.print("Linear:");
+    x = event->acceleration.x;
+    y = event->acceleration.y;
+    z = event->acceleration.z;
+  }
+  else {
+    Serial.print("Unk:");
+  }
+
+  Serial.print("\tx= ");
+  Serial.print(x);
+  Serial.print(" |\ty= ");
+  Serial.print(y);
+  Serial.print(" |\tz= ");
+  Serial.println(z);
+}
+
 
 
 void setup() {
@@ -69,122 +104,43 @@ void loop() {
         if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 3){
-          mythruster_FL.writeMicroseconds(motor_speed);
+            mythruster_FL.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 4){
-          mythruster_BR.writeMicroseconds(motor_speed);
+            mythruster_BR.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 5){
-          mythruster_BL.writeMicroseconds(motor_speed);
+            mythruster_BL.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 6){
-          mythruster_R.writeMicroseconds(motor_speed);
+            mythruster_R.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 7){
-          mythruster_L.writeMicroseconds(motor_speed);
+            mythruster_L.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 8){
-         myservo_rotate.write(servo_speed_convert);
+            myservo_rotate.write(servo_speed_convert);
         } else if (incomingByte[2] == 9){
-         myservo_grab.write(servo_speed_convert);
+            myservo_grab.write(servo_speed_convert);
         }
         }
       }
     }
 
-    orientation = orientation_control[1]
-    rotation_vector = rotation_vector_control[2]
-    linear_acceleration = linear_acceleration_control[3]
-    linear_rotate_packet = char(0) + char(1) + char(2) + char(3)
-    orient_packet = char(0) + char(1) + char(2) + char(3)
-      
-    if (Serial.available>=4){
-      
-          if (incomingByte[2] == 2){
-          mythruster_FR.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 3){
-          mythruster_FL.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 4){
-          mythruster_BR.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 5){
-          mythruster_BL.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 6){
-          mythruster_R.writeMicroseconds(motor_speed);
-        } else if (incomingByte[2] == 7){
-          mythruster_L.writeMicroseconds(motor_speed);
-        } 
-      
-      
-    }
 
-      if (Serial.available>=4){
-          
-          if (incomingByte[2] == 2){
-          mythruster_FR.writeMicroseconds();
-        } else if (incomingByte[2] == 3){
-          mythruster_FL.writeMicroseconds();
-        } else if (incomingByte[2] == 4){
-          mythruster_BR.writeMicroseconds();
-        } else if (incomingByte[2] == 5){
-          mythruster_BL.writeMicroseconds();
-        } else if (incomingByte[2] == 6){
-          mythruster_R.writeMicroseconds();
-        } else if (incomingByte[2] == 7){
-          mythruster_L.writeMicroseconds();
-        } 
-      
-    }
-
-
-     if (Serial.available>=4){
-          
-          if (incomingByte[2] == 2){
-          mythruster_FR.writeMicroseconds();
-        } else if (incomingByte[2] == 3){
-          mythruster_FL.writeMicroseconds();
-        } else if (incomingByte[2] == 4){
-          mythruster_BR.writeMicroseconds();
-        } else if (incomingByte[2] == 5){
-          mythruster_BL.writeMicroseconds();
-        } else if (incomingByte[2] == 6){
-          mythruster_R.writeMicroseconds();
-        } else if (incomingByte[2] == 7){
-          mythruster_L.writeMicroseconds();
-        } 
-      
-    }
-  
-  
- 
-    
-  
+   reportIMUData();
 }
 
-void printEvent(sensors_event_t* event) {
-  double x = -1000000, y = -1000000 , z = -1000000; 
-  else if (event->type == SENSOR_TYPE_ORIENTATION) {
-    Serial.print("Orient:");
-    x = event->orientation.x;
-    y = event->orientation.y;
-    z = event->orientation.z;
-  }
-  else if (event->type == SENSOR_TYPE_ROTATION_VECTOR) {
-    Serial.print("Rot:");
-    x = event->gyro.x;
-    y = event->gyro.y;
-    z = event->gyro.z;
-  }
-  else if (event->type == SENSOR_TYPE_LINEAR_ACCELERATION) {
-    Serial.print("Linear:");
-    x = event->acceleration.x;
-    y = event->acceleration.y;
-    z = event->acceleration.z;
-  }
-  else {
-    Serial.print("Unk:");
-  }
-
-  Serial.print("\tx= ");
-  Serial.print(x);
-  Serial.print(" |\ty= ");
-  Serial.print(y);
-  Serial.print(" |\tz= ");
-  Serial.println(z);
+void reportIMUData() {
+    sensors_event_t orientation , gyro , accel;
+    bno.getEvent(&orientation, Adafruit_BNO055::VECTOR_EULER);
+    bno.getEvent(&gyro, Adafruit_BNO055::VECTOR_GYROSCOPE);
+    bno.getEvent(&accel, Adafruit_BNO055::VECTOR_LINEARACCEL);
+  
+    Serial.write(gyro->orientation.x);
+    Serial.write(gyro->orientation.y);
+    Serial.write(gyro->orientation.z);
+    Serial.write(gyro->gyro.x);
+    Serial.write(gyro->gyro.y);
+    Serial.write(gyro->gyro.z);
+    Serial.write(gyro->accel.x);
+    Serial.write(gyro->accel.y);
+    Serial.write(gyro->accel.z);
+  
 }
-
 
