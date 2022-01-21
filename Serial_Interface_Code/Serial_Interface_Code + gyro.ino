@@ -46,15 +46,6 @@ void setup() {
 }
 
 void loop() {
-  sensors_event_t orientationData , angVelocityData , linearAccelData;
-  bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
-  bno.getEvent(&angVelocityData, Adafruit_BNO055::VECTOR_GYROSCOPE);
-  bno.getEvent(&linearAccelData, Adafruit_BNO055::VECTOR_LINEARACCEL);
-
-  Serial.write(&orientationData);
-  Serial.write(&angVelocityData);
-  Serial.write(&linearAccelData);
-
 
     if (Serial.available>=4){
       byte packetheader = Serial.read();
