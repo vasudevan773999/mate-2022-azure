@@ -1,171 +1,97 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QVBoxLayout, QGridLayout, QLabel, QSlider
-from PyQt5.QtMultimedia import QCameraInfo, QCamera, QCameraZoomControl
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QTabBar, QToolBar, QGridLayout, QLabel, QPushButton, QStatusBar
+from PyQt5.QtMultimedia import QCameraInfo, QCamera
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeyEvent# use for key
+# from PyQt5 import QtWidgets
 
-import json
 import sys
+import yaml
+import logging
 
 class AzureUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        with open('gui/settings.json', 'r') as f:
-            self.json_settings = json.load(f)
+        self.setWindowTitle('Azure UI')
+        self.setStyleSheet('background: rgb(40,40,40)')
 
-        # Setup
-        self.setWindowTitle('Azure User Interface')
-        self.setStyleSheet(f'{"background: rgb(40,40,40)" if self.json_settings["theme"] == "dark" else "background: rgb(255,255,255)"}; border-radius: 10px')
-        
-
-        self.cameras = QCameraInfo.availableCameras()
-
-        self.layout = QVBoxLayout()
-
-        self.parent_widget = QWidget()
-        self.parent_widget.setLayout(self.layout)
-
-        self.setCentralWidget(self.parent_widget)
+        self.tabs = Tabs()
+        # self.tabs.setStyleSheet('border-top: rgb(40,40,40)')
 
 
-        # Tabs
-        self.tabs = QTabWidget()
-        self.camera_tab = QWidget()
-        self.settings_tab = QWidget()
+        self.setCentralWidget(self.tabs)
 
-        self.tabs.setStyleSheet(f'{"background: rgb(40,40,40)" if self.json_settings["theme"] == "dark" else "background: rgb(255,255,255)"}; border-radius: 10px')
-        self.layout.addWidget(self.tabs)
+ 
 
+class Tabs(QTabWidget):
+    def __init__(self):
+        super().__init__()
 
-        # Camera 1
-        self.camera_1_parent = QWidget()
-        self.camera_1_parent.setStyleSheet(f'{"background: rgb(50,50,50)" if self.json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
-        self.camera_1_parent.setFixedSize(460,250)
-        self.camera_1_parent.layout = QGridLayout()
+        self.camera_tab = CameraTab()
+        self.logs_tab = LogsTab()
+        self.settings_tab = SettingsTab()
 
+        self.addTab(self.camera_tab, 'Camera Grid')
+        self.addTab(Camera(settings_yml['camera-ports']['cam-1']), 'Camera 1')
+        self.addTab(Camera(settings_yml['camera-ports']['cam-2']), 'Camera 2')
+        self.addTab(Camera(settings_yml['camera-ports']['cam-3']), 'Camera 3')
+        self.addTab(Camera(settings_yml['camera-ports']['cam-4']), 'Camera 4')
+        self.addTab(self.logs_tab, 'Logs')
+        self.addTab(self.settings_tab, 'Settings')
 
-        self.viewfinder_1 = QCameraViewfinder()
+        self.setDocumentMode(True)
 
-        self.camera_1 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_1']])
-        self.camera_1.setViewfinder(self.viewfinder_1)
-        self.camera_1.start()
+        self.setTabPosition(QTabWidget.West if settings_yml['vertical-tabs'] else QTabWidget.North)
 
+    def add_tab(self):
+        pass
 
-        self.slider_1 = QSlider()
-        self.slider_1.setMaximum(10)
+class CameraTab(QWidget):
+    def __init__(self):
+        super().__init__()
 
+        self.layout = QGridLayout()
+        self.layout.setSpacing(0)
 
-        self.camera_1_parent.layout.addWidget(self.viewfinder_1, 0,0)
-        self.camera_1_parent.layout.addWidget(self.slider_1, 0,1)
+        self.cam1 = Camera(settings_yml['camera-ports']['cam-1'])
+        self.cam2 = Camera(settings_yml['camera-ports']['cam-2'])
+        self.cam3 = Camera(settings_yml['camera-ports']['cam-3'])
+        self.cam4 = Camera(settings_yml['camera-ports']['cam-4'])
 
-        self.camera_1_parent.setLayout(self.camera_1_parent.layout)
+        self.layout.addWidget(self.cam1, 0,0)
+        self.layout.addWidget(self.cam2, 0,1)
+        self.layout.addWidget(self.cam3, 1,0)
+        self.layout.addWidget(self.cam4, 1,1)
 
-        # Camera 2
-        self.camera_2_parent = QWidget()
-        self.camera_2_parent.setStyleSheet(f'{"background: rgb(50,50,50)" if self.json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
-        self.camera_2_parent.setFixedSize(460,250)
-        self.camera_2_parent.layout = QGridLayout()
+        self.setLayout(self.layout)
 
+class Camera(QCameraViewfinder):
+    def __init__(self, port):
+        super().__init__()
 
-        self.viewfinder_2 = QCameraViewfinder()
+        self.camera = QCamera(cameras[port])
+        self.camera.setViewfinder(self)
+        self.camera.start()
 
-        self.camera_2 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_2']])
-        self.camera_2.setViewfinder(self.viewfinder_2)
-        self.camera_2.start()
+class LogsTab(QWidget):
+    def __init__(self):
+        super().__init__()
 
+class SettingsTab(QWidget):
+    def __init__(self):
+        super().__init__()
 
-        self.slider_2 = QSlider()
-        self.slider_2.setMaximum(10)
-
-        self.camera_2_parent.layout.addWidget(self.viewfinder_2, 0,0)
-        self.camera_2_parent.layout.addWidget(self.slider_2, 0,1)
-
-        self.camera_2_parent.setLayout(self.camera_2_parent.layout)
-
-        # Camera 3
-        self.camera_3_parent = QWidget()
-        self.camera_3_parent.setStyleSheet(f'{"background: rgb(50,50,50)" if self.json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
-        self.camera_3_parent.setFixedSize(460,250)
-        self.camera_3_parent.layout = QGridLayout()
-
-
-        self.viewfinder_3 = QCameraViewfinder()
-
-        self.camera_3 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_3']])
-        self.camera_3.setViewfinder(self.viewfinder_3)
-        self.camera_3.start()
-
-
-        self.slider_3 = QSlider()
-        self.slider_3.setMaximum(10)
-
-        self.camera_3_parent.layout.addWidget(self.viewfinder_3, 0,0)
-        self.camera_3_parent.layout.addWidget(self.slider_3, 0,1)
-
-        self.camera_3_parent.setLayout(self.camera_3_parent.layout)
-
-
-        # Camera 4
-        self.camera_4_parent = QWidget()
-        self.camera_4_parent.setStyleSheet(f'{"background: rgb(50,50,50)" if self.json_settings["theme"] == "dark" else "background: rgb(245,245,245)"}; padding: 5px; border-radius: 10px')
-        self.camera_4_parent.setFixedSize(460,250)
-        self.camera_4_parent.layout = QGridLayout()
-
-
-        self.viewfinder_4 = QCameraViewfinder()
-
-        self.camera_4 = QCamera(self.cameras[self.json_settings['camera_ports']['camera_2']])
-        self.camera_4.setViewfinder(self.viewfinder_4)
-        self.camera_4.start()
-
-
-        self.slider_4 = QSlider()
-        self.slider_4.setMaximum(10)
-
-        self.camera_4_parent.layout.addWidget(self.viewfinder_4, 0,0)
-        self.camera_4_parent.layout.addWidget(self.slider_4, 0,1)
-
-        self.camera_4_parent.setLayout(self.camera_4_parent.layout)
-
-        # #temp
-        # self.new = QWidget()
-        # self.new.layout = QGridLayout()
-        # self.new.setLayout(self.new.layout)
-        # self.new.layout.addWidget(self.camera_1_parent)
-
-
-        # Camera layout
-        self.camera_tab.layout = QGridLayout()
-        self.camera_tab.layout.addWidget(self.camera_1_parent, 1,0)
-        self.camera_tab.layout.addWidget(self.camera_2_parent, 1,1)
-        self.camera_tab.layout.addWidget(self.camera_3_parent, 2,0)
-        self.camera_tab.layout.addWidget(self.camera_4_parent, 2,1)
-
-        self.camera_tab.setLayout(self.camera_tab.layout)
-
-
-        # Settings tab
-        self.settings_tab = QWidget()
-        self.settings_tab.layout = QGridLayout()
-
-
-        # Layout
-        self.tabs.addTab(self.camera_tab, "Cameras")
-        self.tabs.addTab(self.settings_tab, "Settings")
-    
-
-    # def zoom_camera_1(self, e):
-    #     # self.camera_1.
-
-
-        # self.new.resize(460-(e*10), 250-(10*e))
-        # # self.viewfinder_1.resize()
-        # # self.viewfinder_1.
-        # pass
 
 
 if __name__ == '__main__':
+    # Defining global variables
+    cameras = QCameraInfo.availableCameras()
+
+    with open('gui/settings.yml', 'r') as f:
+        settings_yml = yaml.safe_load(f)
+    print(settings_yml)
+
+    # Create application
     app = QApplication([])
 
     window = AzureUI()
