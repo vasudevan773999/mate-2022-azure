@@ -2,7 +2,7 @@ from threading import Thread
 import serial
 import controls
 import gui
-import struct
+
 class Comms:
     def __init__(self, port: int, baud_rate: int):
         self.port = port
@@ -27,8 +27,6 @@ class Comms:
             rightJoy_UD = packetControls.packet[3]
             servoRotate = packetControls.packet[4]
             servoGrab = packetControls.packet[5]
-            
-            
 
             while True:
                 
