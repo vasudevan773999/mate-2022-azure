@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QTab
 from PyQt5.QtMultimedia import QCameraInfo, QCamera
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from PyQt5.QtCore import Qt
-# from PyQt5 import QtWidgets
 
 import sys
 import yaml
@@ -21,7 +20,6 @@ class AzureUI(QMainWindow):
 
         self.setCentralWidget(self.tabs)
 
- 
 
 class Tabs(QTabWidget):
     def __init__(self):
@@ -91,7 +89,7 @@ if __name__ == '__main__':
         settings_yml = yaml.safe_load(f)
     print(settings_yml)
 
-    # Create application
+    # Create UI application
     app = QApplication([])
 
     window = AzureUI()
