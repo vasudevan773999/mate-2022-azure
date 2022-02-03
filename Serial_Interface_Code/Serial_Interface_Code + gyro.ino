@@ -1,5 +1,3 @@
-
-import serial
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
@@ -10,13 +8,14 @@ char footer = 10
 
   
 Servo mythruster_FR;
+##declaring each thruster as a servo
 Servo mythruster_BR;
 Servo mythruster_BL;
 Servo mythruster_FL;
 Servo mythruster_R;
 Servo mythruster_L;
 Servo myservo_rotate;
-Servo myservo_grab;  
+Servo myservo_grab;
 
 
 void setup() {
@@ -28,6 +27,7 @@ void setup() {
   
   mythruster_BR.attach(8,1000,2000);
   mythruster_BR.writeMicroseconds(1500);
+  ##assigns a signal number on the itsybitsy to each thruster and sets it at 1500 so that we don't need to input 1500 before inputing the microsecond that we want it set at
   
   mythruster_BL.attach(9,1000,2000);
   mythruster_BL.writeMicroseconds(1500);
@@ -56,7 +56,7 @@ void loop() {
         byte motor_servo = serial.read();
         int8_t servo_speed = Serial.read();
         int servo_speed_convert = (int)((servo_speed * 0.73)-255);
-        
+        ##determines the motor speed based in bytes recieved from backend
         if (incomingByte[2] == 2){
           mythruster_FR.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 3){
@@ -93,6 +93,7 @@ void reportIMUData() {
     Serial.write(gyro->orientation.z);
     Serial.write(gyro->gyro.x);
     Serial.write(gyro->gyro.y);
+    ## sends the information from getEvent to backend
     Serial.write(gyro->gyro.z);
     Serial.write(gyro->accel.x);
     Serial.write(gyro->accel.y);
