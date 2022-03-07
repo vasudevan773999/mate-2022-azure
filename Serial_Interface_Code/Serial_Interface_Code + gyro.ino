@@ -115,13 +115,25 @@ void loop() {
             mythruster_L.writeMicroseconds(motor_speed);
         } else if (incomingByte[2] == 8){
             myservo_rotate.writeMicroseconds(servo_speed_convert);
-        } else if (incomingByte[2] == 9){
-            myservo_grab.writeMicroseconds(servo_speed_convert);
-        } else if ( incomingByte[2] == 10){
-            myservo_rotate.writeMicroseconds(1500);
-            myservo_grab.writeMicroseconds(1500);
+            if (incomingByte[3] == 12){
+              myservo_rotate.writeMicroseconds(180)
+            } else if (incomingByte[3] == 11){
+              myservo_rotate.writeMicroseconds(0)
+              }
+        } else if (incomingByte[2] == 9){            
+          myservo_grab.writeMicroseconds(servo_speed_convert);
+            if (incomingByte[3] == 12){
+              myservo_rotate.writeMicroseconds(180)
+            } else if (incomingByte[3] == 11){
+              myservo_rotate.writeMicroseconds(0)
+              }
         }
+          
+              
+        } 
         }
+      
+      
       }
     }
 
