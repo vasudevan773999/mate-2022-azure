@@ -124,6 +124,8 @@ void reportIMUData() {
     bno.getEvent(&gyro, Adafruit_BNO055::VECTOR_GYROSCOPE);
     bno.getEvent(&accel, Adafruit_BNO055::VECTOR_LINEARACCEL);
   
+    Serial.write(0x4e);
+    Serial.write(0x0f);
     Serial.write(gyro->orientation.x);
     Serial.write(gyro->orientation.y);
     Serial.write(gyro->orientation.z);
@@ -133,9 +135,5 @@ void reportIMUData() {
     Serial.write(gyro->accel.x);
     Serial.write(gyro->accel.y);
     Serial.write(gyro->accel.z);
-  
-  
-
-     
 }
 
