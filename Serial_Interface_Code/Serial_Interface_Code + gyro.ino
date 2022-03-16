@@ -119,6 +119,7 @@ void loop() {
 }
 
 void reportIMUData() {
+    double x = -1000000, y = -1000000 , z = -1000000;
     sensors_event_t orientation , rotation_vector , linear_acceleration;
     bno.getEvent(&orientation, Adafruit_BNO055::VECTOR_EULER);
     bno.getEvent(&gyro, Adafruit_BNO055::VECTOR_GYROSCOPE);
@@ -135,5 +136,13 @@ void reportIMUData() {
     Serial.write(gyro->accel.x);
     Serial.write(gyro->accel.y);
     Serial.write(gyro->accel.z);
+  
+  
+    Serial.print("\tx= ");
+    Serial.print(x);
+    Serial.print(" |\ty= ");
+    Serial.print(y);
+    Serial.print(" |\tz= ");
+    Serial.println(z);
 }
 
