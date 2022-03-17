@@ -2,8 +2,8 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <Servo.h>
-
 #include <utility/imumaths.h>
+
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 Servo motFR;
@@ -15,8 +15,8 @@ Servo motL;
 Servo claw_rotate;
 Servo claw_grab;
 
-char header = 1
-char footer = 10
+char header = 1;
+char footer = 10;
 
 void setup() {
   Serial.begin(9600);
@@ -112,40 +112,37 @@ void loop() {
         }
       }
   }
-}
-    header_gyro = header_control[0]
+    /*header_gyro = header_control[0]
     orientation = orientation_control[1]
     rotation_vector = rotation_vector_control[2]
     linear_acceleration = linear_acceleration_control[3]
-    footer_gyro = footer_control[4]
+    footer_gyro = footer_control[4]*/
     reportIMUData();
 }
 
 void reportIMUData() {
     double x = -1000000, y = -1000000 , z = -1000000;
-    sensors_event_t orientation , rotation_vector , linear_acceleration;
+    sensors_event_t orientation , gyro , accel;
     bno.getEvent(&orientation, Adafruit_BNO055::VECTOR_EULER);
     bno.getEvent(&gyro, Adafruit_BNO055::VECTOR_GYROSCOPE);
     bno.getEvent(&accel, Adafruit_BNO055::VECTOR_LINEARACCEL);
   
     Serial.write(0x4e);
     Serial.write(0x0f);
-    Serial.write(gyro->orientation.x);
-    Serial.write(gyro->orientation.y);
-    Serial.write(gyro->orientation.z);
-    Serial.write(gyro->gyro.x);
-    Serial.write(gyro->gyro.y);
-    Serial.write(gyro->gyro.z);
-    Serial.write(gyro->accel.x);
-    Serial.write(gyro->accel.y);
-    Serial.write(gyro->accel.z);
-  
-  
-    Serial.print("\tx= ");
-    Serial.print(x);
-    Serial.print(" |\ty= ");
-    Serial.print(y);
-    Serial.print(" |\tz= ");
-    Serial.println(z);
+    serialWriteFloat(orientation.orientation.x);
+    serialWriteFloat(orientation.orientation.y);
+    serialWriteFloat(orientation.orientation.z);
+    serialWriteFloat(gyro.gyro.x);
+    serialWriteFloat(gyro.gyro.y);
+    serialWriteFloat(accel.acceleration.x);
+    serialWriteFloat(accel.acceleration.y);
+    serialWriteFloat(accel.acceleration.z);
 }
 
+void serialWriteFloat(float f) {
+  uint8_t* ptr = (uint8_t*) &f;
+  for (uint8_t i=0; i<4; ++i) {
+    Serial.write(*ptr);
+    ptr++;
+  }
+}
