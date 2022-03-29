@@ -93,7 +93,7 @@ void loop() {
           motBL.writeMicroseconds(1500);
           motR.writeMicroseconds(1500);
           motL.writeMicroseconds(1500);
-          claw_grav.write(9000);
+          claw_grab.write(9000);
         
       }
       else if (motor == 13){
