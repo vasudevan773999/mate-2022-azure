@@ -96,6 +96,9 @@ void loop() {
           claw_grab.write(9000);
         
       }
+      else if (motor==12){
+          claw_grab.write(9000);
+      }
       else if (motor == 13){
         if (m == 127){
           Serial.print("Top Motor Down");
