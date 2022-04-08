@@ -26,9 +26,8 @@ void setup() {
   motBL.attach(A4, 1000, 2000);
   motFL.attach(A3, 1000, 2000);
   motR.attach(10,1000, 2000);
-  motL.attach(9, 1000, 2000);
-  claw_rotate.attach(11,0,120);
-  claw_grab.attach(12,0,120);
+  motL.attach(5, 1000, 2000);
+  claw_grab.attach(11,0,120);
 
   motFR.writeMicroseconds(1500);
   motBR.writeMicroseconds(1500);
@@ -113,37 +112,5 @@ void loop() {
         }
       }
   }
-    /*header_gyro = header_control[0]
-    orientation = orientation_control[1]
-    rotation_vector = rotation_vector_control[2]
-    linear_acceleration = linear_acceleration_control[3]
-    footer_gyro = footer_control[4]*/
-    reportIMUData();
 }
 
-void reportIMUData() {
-    double x = -1000000, y = -1000000 , z = -1000000;
-    sensors_event_t orientation , gyro , accel;
-    bno.getEvent(&orientation, Adafruit_BNO055::VECTOR_EULER);
-    bno.getEvent(&gyro, Adafruit_BNO055::VECTOR_GYROSCOPE);
-    bno.getEvent(&accel, Adafruit_BNO055::VECTOR_LINEARACCEL);
-  
-    Serial.write(0x4e);
-    Serial.write(0x0f);
-    serialWriteFloat(orientation.orientation.x);
-    serialWriteFloat(orientation.orientation.y);
-    serialWriteFloat(orientation.orientation.z);
-    serialWriteFloat(gyro.gyro.x);
-    serialWriteFloat(gyro.gyro.y);
-    serialWriteFloat(accel.acceleration.x);
-    serialWriteFloat(accel.acceleration.y);
-    serialWriteFloat(accel.acceleration.z);
-}
-
-void serialWriteFloat(float f) {
-  uint8_t* ptr = (uint8_t*) &f;
-  for (uint8_t i=0; i<4; ++i) {
-    Serial.write(*ptr);
-    ptr++;
-  }
-}
